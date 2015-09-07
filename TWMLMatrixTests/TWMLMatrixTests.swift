@@ -27,10 +27,27 @@ class TWMLMatrixTests: XCTestCase {
         do{
             let m = try Matrix(entries: [[1,2],[2,3],[4,5]])
             XCTAssertEqual(m.rowsCount, 3)
+            XCTAssertEqual(m.colsCount, 2)
         }catch{
             XCTFail("error:\(error)")
         }
         
+        
+    }
+    
+    func testConstructorFail() {
+        // This is an example of a functional test case.
+        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        do{
+            _ = try Matrix(entries: [[1,2],[2, 3, 3],[4,5]])
+        }catch{
+            guard let e = error as? MatrixError else{
+                XCTFail("Matrix should be error to construct.")
+                return
+            }
+            
+            XCTAssertEqual(e, MatrixError.ErrorWithStatus(status: Status.PrecisionMismatchError))
+        }
         
     }
     

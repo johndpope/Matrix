@@ -10,7 +10,7 @@ import Foundation
 import Accelerate
 
 //MARK: Status Type Redefined
-public struct Status: RawRepresentable {
+public struct Status: RawRepresentable, CustomStringConvertible, CustomDebugStringConvertible {
     
     public typealias RawValue = la_status_t
     internal var value:RawValue
@@ -32,4 +32,43 @@ public struct Status: RawRepresentable {
     public static let SingularError = Status(rawValue: la_status_t(LA_SINGULAR_ERROR))
     public static let SliceOutOfBoundsError = Status(rawValue: la_status_t(LA_SLICE_OUT_OF_BOUNDS_ERROR))
     
+    public var description : String {
+        
+        let represent:String
+        
+        switch self {
+        case Status.Success :
+            represent = "Success"
+        case Status.WarningPoorlyConditioned:
+            represent = "WarningPoorlyConditioned"
+        case Status.Internal:
+            represent = "Internal"
+        case Status.InvalidParameterError:
+            represent = "InvalidParameterError"
+        case Status.DimensionMismatchError:
+            represent = "DimensionMismatchError"
+        case Status.PrecisionMismatchError:
+            represent = "PrecisionMismatchError"
+        case Status.SingularError:
+            represent = "SingularError"
+        case Status.SliceOutOfBoundsError:
+            represent = "SliceOutOfBoundsError"
+        default:
+            represent = "Undefined"
+        }
+        
+        return represent
+        
+    }
+    
+    
+    
+    public var debugDescription: String {
+        return "Status : \(self)"
+    }
+    
+}
+
+func ~=(lhs: Status, rhs: Status)->Bool{
+    return lhs.rawValue == rhs.rawValue
 }

@@ -54,18 +54,18 @@ public struct Matrix {
             
         let flatEntries = entries.flatMap { $0 }
         
-        guard let rows = entries.first?.count else {
-            throw MatrixError.Undefined
+        guard let cols = entries.first?.count else {
+            throw MatrixError.ErrorWithStatus(status: .PrecisionMismatchError)
         }
         
         for entryArray in entries {
-            guard rows == entryArray.count else {
-                throw MatrixError.Undefined
+            guard cols == entryArray.count else {
+                throw MatrixError.ErrorWithStatus(status: .PrecisionMismatchError)
             }
         }
         
-        let cols = CountType(entries.count)
-        self = try Matrix(entries: flatEntries, rows: CountType(rows), cols: cols)
+        let rows = CountType(entries.count)
+        self = try Matrix(entries: flatEntries, rows: rows, cols: CountType(cols))
         
     }
     
