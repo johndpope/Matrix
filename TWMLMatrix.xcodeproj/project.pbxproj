@@ -41,6 +41,7 @@
 		794E2F601B9E0C1600A30F1F /* Hint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hint.swift; sourceTree = "<group>"; };
 		794E2F611B9E0C1600A30F1F /* ScalarType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScalarType.swift; sourceTree = "<group>"; };
 		794E2F621B9E0C1600A30F1F /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
+		794E2F6B1B9E153800A30F1F /* GZTracking.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GZTracking.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +118,7 @@
 			children = (
 				794E2F3A1B9E07A800A30F1F /* TWMLMatrix.h */,
 				794E2F3C1B9E07A800A30F1F /* Info.plist */,
+				794E2F6B1B9E153800A30F1F /* GZTracking.podspec */,
 			);
 			name = "Support Files";
 			sourceTree = "<group>";
