@@ -21,9 +21,17 @@ class TWMLMatrixTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
+    func testConstructor() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        do{
+            let m = try Matrix(entries: [[1,2],[2,3],[4,5]])
+            XCTAssertEqual(m.rowsCount, 3)
+        }catch{
+            XCTFail("error:\(error)")
+        }
+        
+        
     }
     
     func testPerformanceExample() {

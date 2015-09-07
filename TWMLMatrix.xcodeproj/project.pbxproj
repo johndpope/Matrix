@@ -10,6 +10,12 @@
 		794E2F3B1B9E07A800A30F1F /* TWMLMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 794E2F3A1B9E07A800A30F1F /* TWMLMatrix.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		794E2F421B9E07A800A30F1F /* TWMLMatrix.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794E2F371B9E07A800A30F1F /* TWMLMatrix.framework */; settings = {ASSET_TAGS = (); }; };
 		794E2F471B9E07A800A30F1F /* TWMLMatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794E2F461B9E07A800A30F1F /* TWMLMatrixTests.swift */; };
+		794E2F521B9E082100A30F1F /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794E2F511B9E082100A30F1F /* Matrix.swift */; settings = {ASSET_TAGS = (); }; };
+		794E2F631B9E0C1600A30F1F /* Attribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794E2F5E1B9E0C1600A30F1F /* Attribute.swift */; settings = {ASSET_TAGS = (); }; };
+		794E2F641B9E0C1600A30F1F /* ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794E2F5F1B9E0C1600A30F1F /* ErrorHandling.swift */; settings = {ASSET_TAGS = (); }; };
+		794E2F651B9E0C1600A30F1F /* Hint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794E2F601B9E0C1600A30F1F /* Hint.swift */; settings = {ASSET_TAGS = (); }; };
+		794E2F661B9E0C1600A30F1F /* ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794E2F611B9E0C1600A30F1F /* ScalarType.swift */; settings = {ASSET_TAGS = (); }; };
+		794E2F671B9E0C1600A30F1F /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794E2F621B9E0C1600A30F1F /* Status.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +35,12 @@
 		794E2F411B9E07A800A30F1F /* TWMLMatrixTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TWMLMatrixTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		794E2F461B9E07A800A30F1F /* TWMLMatrixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TWMLMatrixTests.swift; sourceTree = "<group>"; };
 		794E2F481B9E07A800A30F1F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		794E2F511B9E082100A30F1F /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Matrix.swift; path = Sources/Matrix.swift; sourceTree = "<group>"; };
+		794E2F5E1B9E0C1600A30F1F /* Attribute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attribute.swift; sourceTree = "<group>"; };
+		794E2F5F1B9E0C1600A30F1F /* ErrorHandling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandling.swift; sourceTree = "<group>"; };
+		794E2F601B9E0C1600A30F1F /* Hint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hint.swift; sourceTree = "<group>"; };
+		794E2F611B9E0C1600A30F1F /* ScalarType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScalarType.swift; sourceTree = "<group>"; };
+		794E2F621B9E0C1600A30F1F /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +83,9 @@
 		794E2F391B9E07A800A30F1F /* TWMLMatrix */ = {
 			isa = PBXGroup;
 			children = (
-				794E2F3A1B9E07A800A30F1F /* TWMLMatrix.h */,
-				794E2F3C1B9E07A800A30F1F /* Info.plist */,
+				794E2F511B9E082100A30F1F /* Matrix.swift */,
+				794E2F5D1B9E0C1600A30F1F /* Support Types */,
+				794E2F681B9E0CB500A30F1F /* Support Files */,
 			);
 			path = TWMLMatrix;
 			sourceTree = "<group>";
@@ -84,6 +97,28 @@
 				794E2F481B9E07A800A30F1F /* Info.plist */,
 			);
 			path = TWMLMatrixTests;
+			sourceTree = "<group>";
+		};
+		794E2F5D1B9E0C1600A30F1F /* Support Types */ = {
+			isa = PBXGroup;
+			children = (
+				794E2F5E1B9E0C1600A30F1F /* Attribute.swift */,
+				794E2F5F1B9E0C1600A30F1F /* ErrorHandling.swift */,
+				794E2F601B9E0C1600A30F1F /* Hint.swift */,
+				794E2F611B9E0C1600A30F1F /* ScalarType.swift */,
+				794E2F621B9E0C1600A30F1F /* Status.swift */,
+			);
+			name = "Support Types";
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		794E2F681B9E0CB500A30F1F /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				794E2F3A1B9E07A800A30F1F /* TWMLMatrix.h */,
+				794E2F3C1B9E07A800A30F1F /* Info.plist */,
+			);
+			name = "Support Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +228,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				794E2F521B9E082100A30F1F /* Matrix.swift in Sources */,
+				794E2F671B9E0C1600A30F1F /* Status.swift in Sources */,
+				794E2F631B9E0C1600A30F1F /* Attribute.swift in Sources */,
+				794E2F641B9E0C1600A30F1F /* ErrorHandling.swift in Sources */,
+				794E2F651B9E0C1600A30F1F /* Hint.swift in Sources */,
+				794E2F661B9E0C1600A30F1F /* ScalarType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
