@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "container:TWMLMatrix/TWMLMatrix.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:MatrixDemo/MatrixDemo.playground">
+   </FileRef>
+</Workspace>
