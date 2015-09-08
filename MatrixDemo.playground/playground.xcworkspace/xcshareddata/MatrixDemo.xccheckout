@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>05D992A2-CADE-4016-8C4A-457A9BF65CBA</string>
+	<key>IDESourceControlProjectName</key>
+	<string>playground</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>FF3E614ADFACEC0C034A2EA6CAEB0FD715F80A31</key>
+		<string>https://github.com/gradyzhuo/Matrix-with-Playground.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MatrixDemo.playground/playground.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>FF3E614ADFACEC0C034A2EA6CAEB0FD715F80A31</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/gradyzhuo/Matrix-with-Playground.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>FF3E614ADFACEC0C034A2EA6CAEB0FD715F80A31</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>FF3E614ADFACEC0C034A2EA6CAEB0FD715F80A31</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MatrixDemo</string>
+		</dict>
+	</array>
+</dict>
+</plist>

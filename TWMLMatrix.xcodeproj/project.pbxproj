@@ -16,6 +16,8 @@
 		794E2F651B9E0C1600A30F1F /* Hint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794E2F601B9E0C1600A30F1F /* Hint.swift */; settings = {ASSET_TAGS = (); }; };
 		794E2F661B9E0C1600A30F1F /* ScalarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794E2F611B9E0C1600A30F1F /* ScalarType.swift */; settings = {ASSET_TAGS = (); }; };
 		794E2F671B9E0C1600A30F1F /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 794E2F621B9E0C1600A30F1F /* Status.swift */; settings = {ASSET_TAGS = (); }; };
+		794E2F6E1B9EB63A00A30F1F /* TWMLMatrix.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 794E2F6D1B9EB63A00A30F1F /* TWMLMatrix.podspec */; settings = {ASSET_TAGS = (); }; };
+		794E2F701B9EB64700A30F1F /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 794E2F6F1B9EB64700A30F1F /* LICENSE */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +43,8 @@
 		794E2F601B9E0C1600A30F1F /* Hint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hint.swift; sourceTree = "<group>"; };
 		794E2F611B9E0C1600A30F1F /* ScalarType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScalarType.swift; sourceTree = "<group>"; };
 		794E2F621B9E0C1600A30F1F /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
-		794E2F6B1B9E153800A30F1F /* GZTracking.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = GZTracking.podspec; sourceTree = "<group>"; };
+		794E2F6D1B9EB63A00A30F1F /* TWMLMatrix.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TWMLMatrix.podspec; sourceTree = "<group>"; };
+		794E2F6F1B9EB64700A30F1F /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,7 +121,8 @@
 			children = (
 				794E2F3A1B9E07A800A30F1F /* TWMLMatrix.h */,
 				794E2F3C1B9E07A800A30F1F /* Info.plist */,
-				794E2F6B1B9E153800A30F1F /* GZTracking.podspec */,
+				794E2F6D1B9EB63A00A30F1F /* TWMLMatrix.podspec */,
+				794E2F6F1B9EB64700A30F1F /* LICENSE */,
 			);
 			name = "Support Files";
 			sourceTree = "<group>";
@@ -213,6 +217,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				794E2F701B9EB64700A30F1F /* LICENSE in Resources */,
+				794E2F6E1B9EB63A00A30F1F /* TWMLMatrix.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +424,7 @@
 				794E2F4D1B9E07A800A30F1F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		794E2F4E1B9E07A800A30F1F /* Build configuration list for PBXNativeTarget "TWMLMatrixTests" */ = {
 			isa = XCConfigurationList;
@@ -426,6 +433,7 @@
 				794E2F501B9E07A800A30F1F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

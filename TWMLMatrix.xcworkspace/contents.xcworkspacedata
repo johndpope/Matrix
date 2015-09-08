@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "container:TWMLMatrix/TWMLMatrix.xcodeproj">
+      location = "group:TWMLMatrix.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:MatrixDemo/MatrixDemo.playground">
+      location = "group:MatrixDemo.playground">
    </FileRef>
 </Workspace>
