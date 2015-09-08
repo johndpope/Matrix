@@ -43,8 +43,8 @@
 		794E2F601B9E0C1600A30F1F /* Hint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hint.swift; sourceTree = "<group>"; };
 		794E2F611B9E0C1600A30F1F /* ScalarType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScalarType.swift; sourceTree = "<group>"; };
 		794E2F621B9E0C1600A30F1F /* Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
-		794E2F6D1B9EB63A00A30F1F /* TWMLMatrix.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TWMLMatrix.podspec; sourceTree = "<group>"; };
-		794E2F6F1B9EB64700A30F1F /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		794E2F6D1B9EB63A00A30F1F /* TWMLMatrix.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = TWMLMatrix.podspec; path = ../TWMLMatrix.podspec; sourceTree = "<group>"; };
+		794E2F6F1B9EB64700A30F1F /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
