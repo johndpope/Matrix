@@ -145,7 +145,7 @@ extension Matrix {
     //逆矩陣
     public mutating func inverse() throws {
         
-        guard self.rowsCount != self.colsCount else  {
+        guard self.rowsCount == self.colsCount else  {
             //不是方陣
             throw MatrixError.SizeNotEqual(function: "inverse", position: .This(matrix: self, size: .Rows), otherPosition: .This(matrix: self, size: .Rows))
         }
