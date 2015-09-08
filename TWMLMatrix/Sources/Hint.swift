@@ -10,7 +10,7 @@ import Foundation
 import Accelerate
 
 //MARK: Hint Type Redefined
-public struct Hint:OptionSetType {
+public struct Hint {
     
     public typealias RawValue = la_hint_t
     internal var value:RawValue

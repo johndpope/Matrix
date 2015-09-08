@@ -10,7 +10,7 @@ import Foundation
 import Accelerate
 
 //MARK: Status Type Redefined
-public struct Status: RawRepresentable, CustomStringConvertible, CustomDebugStringConvertible {
+public struct Status: RawRepresentable, Printable, DebugPrintable {
     
     public typealias RawValue = la_status_t
     internal var value:RawValue
@@ -61,14 +61,16 @@ public struct Status: RawRepresentable, CustomStringConvertible, CustomDebugStri
         
     }
     
-    
-    
     public var debugDescription: String {
         return "Status : \(self)"
     }
     
 }
 
-func ~=(lhs: Status, rhs: Status)->Bool{
+public func ==(lhs: Status, rhs: Status)->Bool{
+    return lhs.rawValue == rhs.rawValue
+}
+
+public func ~=(lhs: Status, rhs: Status)->Bool{
     return lhs.rawValue == rhs.rawValue
 }

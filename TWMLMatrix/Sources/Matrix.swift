@@ -38,10 +38,11 @@ public struct Matrix {
         self.attributes = .Default
     }
     
-    public init( entries: [Double], rows: CountType, cols: CountType, stride: CountType? = nil, hint: Hint = .Default, attributes:Attribute = .Default) throws {
+    public init?( entries: [Double], rows: CountType, cols: CountType, stride: CountType? = nil, hint: Hint = .Default, attributes:Attribute = .Default, inout error:NSError?) {
         
         if Int(rows) * Int(cols) != entries.count {
-            throw MatrixError.ConstructWithSize
+            error = NSError.ConstructWithSize()
+            return nil
         }
         
         self.object = la_matrix_from_double_buffer(entries, CountType(rows), cols, stride ?? cols, hint.rawValue, attributes.rawValue)
@@ -50,22 +51,35 @@ public struct Matrix {
     }
     
     
-    public init( entries: [[Double]], hint: Hint = Hint.Default, attribute: Attribute = .Default) throws {
+    public init?( entries: [[Double]], hint: Hint = Hint.Default, attribute: Attribute = .Default, inout error:NSError?) {
             
         let flatEntries = entries.flatMap { $0 }
         
-        guard let cols = entries.first?.count else {
-            throw MatrixError.ErrorWithStatus(status: .PrecisionMismatchError)
-        }
-        
-        for entryArray in entries {
-            guard cols == entryArray.count else {
-                throw MatrixError.ErrorWithStatus(status: .PrecisionMismatchError)
+        if let cols = entries.first?.count {
+            
+            for entryArray in entries {
+                
+                if cols != entryArray.count {
+                    error = NSError.ConstructWithSize()
+                    return nil
+                }
+
             }
+            
+            let rows = CountType(entries.count)
+            if let m = Matrix(entries: flatEntries, rows: rows, cols: CountType(cols), error: &error){
+                self = m
+            }else{
+                return nil
+            }
+            
+        }else{
+            return nil
         }
         
-        let rows = CountType(entries.count)
-        self = try Matrix(entries: flatEntries, rows: rows, cols: CountType(cols))
+        
+        
+        
         
     }
     
@@ -109,49 +123,59 @@ extension Matrix {
 extension Matrix {
     
     //+
-    public mutating func sum(rightMatrix matrix: Matrix) throws {
+    public mutating func sum(rightMatrix matrix: Matrix, inout error:NSError?) {
         
-        guard self.colsCount == matrix.colsCount && self.rowsCount == matrix.rowsCount else {
-            throw MatrixError.SizeNotEqual(function: "sum", position: .Left(matrix: self, size: .Both), otherPosition: .Right(matrix: matrix, size: .Both))
+        if self.colsCount == matrix.colsCount && self.rowsCount == matrix.rowsCount {
+            if let o = self._sum(matrix.object, error: &error) {
+                self.object = o
+            }
+        }else{
+            error = NSError.SizeNotEqual(function: "sum", position: .Left(matrix: self, size: .Both), otherPosition: .Right(matrix: matrix, size: .Both))
         }
-        
-        self.object = try self._sum(matrix.object)
         
     }
     
     //-
-    public mutating func difference(rightMatrix matrix: Matrix) throws {
+    public mutating func difference(rightMatrix matrix: Matrix, inout error:NSError?) {
         
-        guard self.colsCount == matrix.colsCount && self.rowsCount == matrix.rowsCount else {
-            throw MatrixError.SizeNotEqual(function: "difference", position: .Left(matrix: self, size: .Both), otherPosition: .Right(matrix: matrix, size: .Both))
+        if self.colsCount == matrix.colsCount && self.rowsCount == matrix.rowsCount {
+            if let o = self._difference(matrix.object, error: &error) {
+                self.object = o
+            }
+            
+        }else{
+            error = MatrixError.SizeNotEqual(function: "difference", position: .Left(matrix: self, size: .Both), otherPosition: .Right(matrix: matrix, size: .Both))
         }
         
-        self.object = try self._difference(matrix.object)
+        
         
     }
     
     //*
-    public mutating func product(rightMatrix matrix: Matrix) throws{
+    public mutating func product(rightMatrix matrix: Matrix, inout error:NSError?){
         
-        guard self.colsCount == matrix.rowsCount else {
-            throw MatrixError.SizeNotEqual(function: "product", position: .Left(matrix: self, size: .Cols), otherPosition: .Right(matrix: matrix, size: .Rows))
+        if self.colsCount == matrix.rowsCount {
+            if let o = self._product(matrix.object, error: &error) {
+                self.object = o
+            }
+        }else{
+            error = MatrixError.SizeNotEqual(function: "product", position: .Left(matrix: self, size: .Cols), otherPosition: .Right(matrix: matrix, size: .Rows))
         }
-        
-        self.object = try self._product(matrix.object)
         
     }
     
 
     //逆矩陣
-    public mutating func inverse() throws {
+    public mutating func inverse(inout error:NSError?) {
         
-        guard self.rowsCount != self.colsCount else  {
+        if self.rowsCount == self.colsCount  {
+            if let o = self._inverse(&error) {
+                self.object = o
+            }
+        }else{
             //不是方陣
-            throw MatrixError.SizeNotEqual(function: "inverse", position: .This(matrix: self, size: .Rows), otherPosition: .This(matrix: self, size: .Rows))
+            error = MatrixError.SizeNotEqual(function: "inverse", position: .This(matrix: self, size: .Rows), otherPosition: .This(matrix: self, size: .Rows))
         }
-        
-        self.object = try self._inverse()
-        
     }
     
     
@@ -169,57 +193,73 @@ extension Matrix {
 extension Matrix {
     
     //+
-    public func matrixWithSum(rightMatrix matrix: Matrix) throws -> Matrix{
+    public func matrixWithSum(rightMatrix matrix: Matrix, inout error:NSError?) -> Matrix!{
         
-        guard self.colsCount == matrix.colsCount && self.rowsCount == matrix.rowsCount else {
-            throw MatrixError.SizeNotEqual(function: "matrixWithSum", position: .Left(matrix: self, size: .Both), otherPosition: .Right(matrix: matrix, size: .Both))
+        if self.colsCount == matrix.colsCount && self.rowsCount == matrix.rowsCount {
+            if let result = self._sum(matrix.object, error: &error) {
+                return Matrix(object: result)
+            }
+        }else{
+            error = MatrixError.SizeNotEqual(function: "matrixWithSum", position: .Left(matrix: self, size: .Both), otherPosition: .Right(matrix: matrix, size: .Both))
         }
         
-        let result = try self._sum(matrix.object)
-        return Matrix(object: result)
+        return nil
         
     }
     
     //-
-    public func matrixWithDifference(rightMatrix matrix: Matrix) throws -> Matrix{
+    public func matrixWithDifference(rightMatrix matrix: Matrix, inout error:NSError?) -> Matrix!{
         
-        guard self.colsCount == matrix.colsCount && self.rowsCount == matrix.rowsCount else {
-            throw MatrixError.SizeNotEqual(function: "matrixWithDifference",position: .Left(matrix: self, size: .Both), otherPosition: .Right(matrix: matrix, size: .Both))
+        if self.colsCount == matrix.colsCount && self.rowsCount == matrix.rowsCount {
+            
+            if let result = self._difference(matrix.object, error: &error){
+                return Matrix(object: result)
+            }
+            
+        }else{
+            error = MatrixError.SizeNotEqual(function: "matrixWithDifference",position: .Left(matrix: self, size: .Both), otherPosition: .Right(matrix: matrix, size: .Both))
         }
         
-        let result = try self._difference(matrix.object)
-        return Matrix(object: result)
+        return nil
         
     }
     
     //*
-    public func matrixWithProduct(rightMatrix matrix: Matrix) throws -> Matrix{
+    public func matrixWithProduct(rightMatrix matrix: Matrix, inout error:NSError?) -> Matrix!{
         
-        guard self.colsCount == matrix.rowsCount else {
-            throw MatrixError.SizeNotEqual(function: "matrixWithProduct",position: .Left(matrix: self, size: .Cols), otherPosition: .Right(matrix: matrix, size: .Rows))
+        if self.colsCount != matrix.rowsCount {
+            error = MatrixError.SizeNotEqual(function: "matrixWithProduct",position: .Left(matrix: self, size: .Cols), otherPosition: .Right(matrix: matrix, size: .Rows))
+        }else{
+            if let result = self._product(matrix.object, error: &error){
+                return Matrix(object: result)
+            }
         }
         
-        let result = try self._product(matrix.object)
-        return Matrix(object: result)
-        
+        return nil
     }
     
     //解聯立
-    public func matrixWithSolve(rightMatrix matrix: Matrix) throws -> Matrix{
-        let result = try self._solve(matrix.object)
-        return Matrix(object: result)
+    public func matrixWithSolve(rightMatrix matrix: Matrix, inout error:NSError?) -> Matrix!{
+        if let result = self._solve(matrix.object, error: &error){
+            return Matrix(object: result)
+        }
+        return nil
     }
     
     //逆矩陣
-    public func matrixWithInverse() throws -> Matrix {
+    public func matrixWithInverse(inout error:NSError?) -> Matrix! {
         
-        guard self.rowsCount == self.colsCount else  {
+        if self.rowsCount != self.colsCount {
             //不是方陣
-            throw MatrixError.SizeNotEqual(function: "matrixWithInverse", position: .This(matrix: self, size: .Rows), otherPosition: .This(matrix: self, size: .Cols))
+            error = MatrixError.SizeNotEqual(function: "matrixWithInverse", position: .This(matrix: self, size: .Rows), otherPosition: .This(matrix: self, size: .Cols))
+            return nil
         }
         
-        let result = try self._inverse()
-        return Matrix(object: result)
+        if let result = self._inverse(&error){
+            return Matrix(object: result)
+        }
+        
+        return nil
     }
     
     
@@ -238,7 +278,7 @@ extension Matrix {
 extension Matrix {
     
     //get entries
-    public func entries() throws -> [Double] {
+    public func entries(inout error:NSError?) -> [Double]? {
         
         let totalCount = Int(self.rowsCount * self.colsCount)
         
@@ -248,10 +288,11 @@ extension Matrix {
         let status = Status(rawValue: res)
         
         //If no error occurred, print result
-        if status == .Success {
+        if status == Status.Success {
             return result
         }else{
-            throw MatrixError.ErrorWithStatus(status: status)
+            error = MatrixError.ErrorWithStatus(status: status)
+            return nil
         }
     }
     
@@ -261,64 +302,73 @@ extension Matrix {
 extension Matrix {
     
     //+
-    internal func _sum(right : la_object_t) throws -> la_object_t{
+    internal func _sum(right : la_object_t, inout error:NSError?) -> la_object_t!{
         
         let left = self.object
         
-        guard let result = la_sum(left, right) else {
-            throw MatrixError.BLAS(function: "la_sum")
+        if let result = la_sum(left, right) {
+            return result
+        }else{
+            error = MatrixError.BLAS(function: "la_sum")
         }
         
-        return result
-        
+        return nil
     }
     
     //-
-    internal func _difference(right : la_object_t) throws -> la_object_t{
+    internal func _difference(right : la_object_t, inout error:NSError?) -> la_object_t!{
         
         let left = self.object
         
-        guard let result = la_difference(left, right) else {
-            throw MatrixError.BLAS(function: "la_difference")
+        if let result = la_difference(left, right) {
+            return result
+        }else{
+            error = MatrixError.BLAS(function: "la_difference")
         }
         
-        return result
+        return nil
         
     }
     
     //*
-    internal func _product(right : la_object_t) throws -> la_object_t{
+    internal func _product(right : la_object_t, inout error:NSError?) -> la_object_t!{
         let left = self.object
         
-        guard let result = la_matrix_product(left, right) else{
-            throw MatrixError.BLAS(function: "la_matrix_product")
+        if let result = la_matrix_product(left, right){
+            return result
+        }else{
+            error = MatrixError.BLAS(function: "la_matrix_product")
         }
         
-        return  result
+        return  nil
         
     }
     
     //解聯立
-    internal func _solve(right : la_object_t) throws -> la_object_t{
+    internal func _solve(right : la_object_t, inout error:NSError?) -> la_object_t!{
         let left = self.object
         
-        guard let result = la_solve(left, right) else{
-            throw MatrixError.BLAS(function: "la_solve")
+        if let result = la_solve(left, right){
+            return result
+        }else{
+            error = MatrixError.BLAS(function: "la_solve")
         }
         
-        return result
+        return nil
         
     }
     
     
     //逆矩陣
-    internal func _inverse() throws -> la_object_t {
+    internal func _inverse(inout error:NSError?) -> la_object_t! {
         
-        guard let identity = la_identity_matrix(self.rowsCount, la_scalar_type_t(LA_SCALAR_TYPE_DOUBLE), la_attribute_t(LA_DEFAULT_ATTRIBUTES)) else {
-            throw MatrixError.BLAS(function: "la_identity_matrix")
+        if let identity = la_identity_matrix(self.rowsCount, la_scalar_type_t(LA_SCALAR_TYPE_DOUBLE), la_attribute_t(LA_DEFAULT_ATTRIBUTES)) {
+            return self._solve(identity, error: &error)
+        }else{
+            error = MatrixError.BLAS(function: "la_identity_matrix")
         }
         
-        return try self._solve(identity)
+        return nil
     }
     
     
@@ -337,12 +387,17 @@ extension Matrix {
 }
 
 //MARK: - Protocol Implement 
-extension Matrix : CustomStringConvertible, Equatable {
+extension Matrix : Printable, Equatable {
     
     public var description:String{
-        
-        let entriesStrings:String = (try? self.entries().map{ String($0) }.joinWithSeparator(",")) ?? "failed"
-        return "Martix (rows:\(self.rowsCount),cols:\(self.colsCount))=> [\(entriesStrings)]"
+        var error:NSError?
+
+        if let elements = (self.entries(&error)?.map({String(stringInterpolationSegment: $0)})) {
+            let entriesStrings = join(",", elements)
+            return "Martix (rows:\(self.rowsCount),cols:\(self.colsCount))=> [\(entriesStrings)]"
+        }else{
+            return "Failed"
+        }
     }
     
 }
@@ -351,39 +406,80 @@ extension Matrix : CustomStringConvertible, Equatable {
 
 public func ==(lhs: Matrix, rhs: Matrix) -> Bool {
     
-    guard let lEntries = try? lhs.entries() else{
-        return false
-    }
-    guard let rEntries = try? rhs.entries() else{
-        return false
+    var error:NSError?
+    if let lEntries = lhs.entries(&error){
+        
+        if let rEntries = rhs.entries(&error){
+            
+            if lhs.colsCount == rhs.colsCount && lhs.rowsCount == rhs.rowsCount {
+                var result:Bool = true
+                for (index, element) in enumerate(lEntries){
+                    let relement = rEntries[index]
+                    result = result && (element == relement)
+                }
+                return result
+            }
+            
+        }else{
+            println("error: \(error)")
+        }
+        
+    }else{
+        println("error: \(error)")
     }
     
-    guard lhs.colsCount == rhs.colsCount && lhs.rowsCount == rhs.rowsCount else {
-        return false
-    }
-    
-    return lEntries.elementsEqual(rEntries)
+    return false
 }
 
 //MARK: - Operator Function
 
-public func +(lhs: Matrix, rhs:Matrix) throws -> Matrix {
-    return try lhs.matrixWithSum(rightMatrix: rhs)
+public func +(lhs: Matrix, rhs:Matrix) -> Matrix? {
+    var error:NSError?
+    let m = lhs.matrixWithSum(rightMatrix: rhs, error:&error)
+    if error != nil {
+        println("error: \(error)")
+    }
+    return m
 }
 
-public func -(lhs: Matrix, rhs:Matrix) throws -> Matrix {
-    return try lhs.matrixWithDifference(rightMatrix: rhs)
+public func -(lhs: Matrix, rhs:Matrix) -> Matrix? {
+    
+    var error:NSError?
+    let m = lhs.matrixWithDifference(rightMatrix: rhs, error:&error)
+    if error != nil {
+        println("error: \(error)")
+    }
+    return m
 }
 
-public prefix func -(rhs: Matrix) throws -> Matrix {
-    return try rhs.matrixWithInverse()
+public prefix func -(rhs: Matrix) -> Matrix? {
+    
+    var error:NSError?
+    let m = rhs.matrixWithInverse(&error)
+    if error != nil {
+        println("error: \(error)")
+    }
+    return m
 }
 
-public func *(lhs: Matrix, rhs:Matrix) throws -> Matrix {
-    return try lhs.matrixWithProduct(rightMatrix: rhs)
+public func *(lhs: Matrix, rhs:Matrix) -> Matrix? {
+    
+    var error:NSError?
+    let m = lhs.matrixWithProduct(rightMatrix: rhs, error: &error)
+    if error != nil {
+        println("error: \(error)")
+    }
+    return m
+    
 }
 
-public func ~>(lhs:Matrix, rhs:Matrix) throws -> Matrix {
-    return try lhs.matrixWithSolve(rightMatrix: rhs)
+public func ~>(lhs:Matrix, rhs:Matrix) -> Matrix? {
+    
+    var error:NSError?
+    let m = lhs.matrixWithSolve(rightMatrix: rhs, error: &error)
+    if error != nil {
+        println("error: \(error)")
+    }
+    return m
 }
 
