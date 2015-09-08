@@ -12,6 +12,6 @@ s.social_media_url = "https://www.facebook.com/gradyzhuo"
 s.source       = { :git => "https://github.com/gradyzhuo/TWMLMatrix", :tag => s.version.to_s }
 s.platform     = :ios, '8.0'
 s.requires_arc = true
-s.source_files = 'TWMLMatrix/Sources/**/*'
+s.source_files = 'TWMLMatrix/Sources/**/*.swift'
 s.frameworks   = 'Foundation'
 end
