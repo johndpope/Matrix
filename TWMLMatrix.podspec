@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name         = "TWMLMatrix"
-s.version      = "0.1"
+s.version      = "0.2"
 s.summary      = "將 BLAS Open Library Matrix 的部分，重新封裝為Matrix Structure，並透過Swift語言特性，簡化Library的操作。"
 s.description  = <<-DESC
 將 BLAS Open Library Matrix 的部分，重新封裝為Matrix Structure，並透過Swift語言特性，簡化Library的操作。
