@@ -446,9 +446,9 @@
 		794E2F4F1B9E07A800A30F1F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = TWMLMatrixTests/Info.plist;
+				INFOPLIST_FILE = MatrixTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.TWML.TWMLMatrixTests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.Limbic.MatrixTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -457,9 +457,9 @@
 		794E2F501B9E07A800A30F1F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				INFOPLIST_FILE = TWMLMatrixTests/Info.plist;
+				INFOPLIST_FILE = MatrixTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = org.TWML.TWMLMatrixTests;
+				PRODUCT_BUNDLE_IDENTIFIER = org.Limbic.MatrixTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 3.0;
