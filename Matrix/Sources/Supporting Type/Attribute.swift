@@ -6,7 +6,6 @@
 //  Copyright © 2015年 Limbic. All rights reserved.
 //
 
-import Foundation
 import Accelerate
 
 //MARK: Attribute Type Redefined
