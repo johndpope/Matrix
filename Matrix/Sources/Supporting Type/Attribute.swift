@@ -3,7 +3,7 @@
 //  TWMLMatrix
 //
 //  Created by Grady Zhuo on 2015/9/8.
-//  Copyright © 2015年 Grady Zhuo. All rights reserved.
+//  Copyright © 2015年 Limbic. All rights reserved.
 //
 
 import Foundation
@@ -23,6 +23,6 @@ public struct Attribute: RawRepresentable {
     public var rawValue: RawValue { return value }
     
     
-    public static let Default = Attribute(rawValue: la_attribute_t(LA_DEFAULT_ATTRIBUTES))
-    public static let EnableLogging = Attribute(rawValue: la_attribute_t(LA_ATTRIBUTE_ENABLE_LOGGING))
+    public static let `default` = Attribute(rawValue: la_attribute_t(LA_DEFAULT_ATTRIBUTES))
+    public static let enableLogging = Attribute(rawValue: la_attribute_t(LA_ATTRIBUTE_ENABLE_LOGGING))
 }

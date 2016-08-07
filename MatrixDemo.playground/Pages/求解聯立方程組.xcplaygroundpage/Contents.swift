@@ -1,9 +1,9 @@
 //: Playground - noun: a place where people can play
 
 import UIKit
-import TWMLMatrix
+import Accelerate
 
-typealias Matrix = TWMLMatrix.Matrix
+import TWMLMatrix
 
 /*
 * 求解聯立方程組：
@@ -30,8 +30,7 @@ do{
     let m = try Matrix(entries: [[1,2],[2,3]])
     var v:Matrix = Matrix(vectorWithEntries: [6, 10])
     
-    let result = try m.matrixWithSolve(rightMatrix: v)
-    
+    let result = m.solved(by: v)
     print(result)
     
     //or
@@ -42,7 +41,6 @@ do{
     print("error:\(error)")
 }
 //: [Next](@next)
-
 
 
 

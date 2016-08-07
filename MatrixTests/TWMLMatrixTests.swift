@@ -41,12 +41,12 @@ class TWMLMatrixTests: XCTestCase {
         do{
             _ = try Matrix(entries: [[1,2],[2, 3, 3],[4,5]])
         }catch{
-            guard let e = error as? MatrixError else{
+            guard let e = error as? Error else{
                 XCTFail("Matrix should be error to construct.")
                 return
             }
             
-            XCTAssertEqual(e, MatrixError.ErrorWithStatus(status: Status.PrecisionMismatchError))
+            XCTAssertEqual(e, Error.ErrorWithStatus(status: Status.precisionMismatchError))
         }
         
     }

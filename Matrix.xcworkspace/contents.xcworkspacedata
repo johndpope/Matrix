@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:TWMLMatrix.xcodeproj">
+      location = "group:/Users/gradyzhuo/Library/Mobile Documents/com~apple~CloudDocs/iCloud Drive/Machine Learning/TWMLMatrix/Matrix.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:MatrixDemo.playground">

@@ -3,10 +3,9 @@
 //  TWMLMatrix
 //
 //  Created by Grady Zhuo on 2015/9/8.
-//  Copyright © 2015年 Grady Zhuo. All rights reserved.
+//  Copyright © 2015年 Limbic. All rights reserved.
 //
 
-import Foundation
 import Accelerate
 
 //MARK: Scalar Type Redefined
