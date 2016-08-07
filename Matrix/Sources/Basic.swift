@@ -12,7 +12,7 @@ import Accelerate
 /**
  (protocol) Basic, define the common feature both in Vector and Matrix.
  */
-public protocol Basic : RawRepresentable, Hashable, CustomStringConvertible, CustomDebugStringConvertible, CustomPlaygroundQuickLookable, ExpressibleByArrayLiteral {
+public protocol Basic : RawRepresentable, Hashable, CustomStringConvertible, CustomDebugStringConvertible, CustomPlaygroundQuickLookable, ArrayLiteralConvertible {
     associatedtype Count:Strideable
     associatedtype RawValue: la_object_t
     
@@ -198,8 +198,8 @@ extension Basic where Count == la_count_t, RawValue == la_object_t {
         
         let totalCount = Int(self.rowsCount * self.colsCount)
         
-        let p =  UnsafeMutablePointer<Double>.allocate(capacity: totalCount)
-        p.initialize(to: 0.0)
+        let p =  UnsafeMutablePointer<Double>.alloc(totalCount)
+        p.initialize(0.0)
         
         let res = la_matrix_to_double_buffer(p, Count(colsCount), rawValue)
         
@@ -208,10 +208,10 @@ extension Basic where Count == la_count_t, RawValue == la_object_t {
         let status = Status(rawValue: res)
         
         //If no error occurred, print result
-        if status == .success {
+        if status == .Success {
             return ContiguousArray<Double>(cArray)
         }else{
-            throw LAError.errorWithStatus(status: status)
+            throw LAError.ErrorWithStatus(status: status)
         }
     }
     
@@ -221,14 +221,14 @@ extension Basic where Count == la_count_t, RawValue == la_object_t {
 extension Basic where Count == la_count_t, RawValue == la_object_t {
     
     //+
-    internal func _summed(_ right : RawValue) throws -> RawValue{
+    internal func _summed(right : RawValue) throws -> RawValue{
 
         let result = rawValue.summed(right)
         
         do{
             try Status.check(status: result.status)
         }catch{
-            throw LAError.blas(function: "la_sum", status: result.status)
+            throw LAError.Blas(function: "la_sum", status: result.status)
         }
         
         return result
@@ -236,14 +236,14 @@ extension Basic where Count == la_count_t, RawValue == la_object_t {
     }
     
     //-
-    internal func _differenced(_ right : RawValue) throws -> RawValue{
+    internal func _differenced(right : RawValue) throws -> RawValue{
         
         let result = rawValue.differenced(right)
         
         do{
             try Status.check(status: result.status)
         }catch{
-            throw LAError.blas(function: "la_difference", status: result.status)
+            throw LAError.Blas(function: "la_difference", status: result.status)
         }
         
         return result
@@ -251,50 +251,50 @@ extension Basic where Count == la_count_t, RawValue == la_object_t {
     }
     
     //*
-    internal func _producted(_ right : RawValue) throws -> RawValue{
+    internal func _producted(right : RawValue) throws -> RawValue{
         let result = rawValue.producted(right)
         
         do{
             try Status.check(status: result.status)
         }catch{
-            throw LAError.blas(function: "la_matrix_product", status: result.status)
+            throw LAError.Blas(function: "la_matrix_product", status: result.status)
         }
         
         return  result
     }
     
-    internal func _elementwised(_ right : RawValue) throws -> RawValue{
+    internal func _elementwised(right : RawValue) throws -> RawValue{
         let result = rawValue.elementwised(right)
         
         do{
             try Status.check(status: result.status)
         }catch{
-            throw LAError.blas(function: "la_elementwise_product", status: result.status)
+            throw LAError.Blas(function: "la_elementwise_product", status: result.status)
         }
         
         return  result
     }
     
-    internal func _producted(_ scalar : Double) -> RawValue{
+    internal func _producted(scalar : Double) -> RawValue{
         
         let result = rawValue.scaled(scalar)
         return  result
     }
     
-    internal func _producted(_ scalar : Float) -> RawValue{
+    internal func _producted(scalar : Float) -> RawValue{
         
         let result = rawValue.scaled(scalar)
         return  result
     }
     
     //解聯立
-    internal func _solved(_ right : RawValue) throws -> RawValue{
+    internal func _solved(right : RawValue) throws -> RawValue{
         let result = rawValue.solved(right)
         
         do{
             try Status.check(status: result.status)
         }catch{
-            throw LAError.blas(function: "la_solve", status: result.status)
+            throw LAError.Blas(function: "la_solve", status: result.status)
         }
         
         return result
@@ -310,7 +310,7 @@ extension Basic where Count == la_count_t, RawValue == la_object_t {
         do{
             try Status.check(status: result.status)
         }catch{
-            throw LAError.blas(function: "la_identity_object", status: result.status)
+            throw LAError.Blas(function: "la_identity_object", status: result.status)
         }
         
         return result
@@ -330,15 +330,14 @@ extension Basic where Count == la_count_t, RawValue == la_object_t {
 //MARK: - Protocol Implement
 extension Basic where Count == la_count_t, RawValue == la_object_t  {
     
-    public func toString(format: Bool = true)->String{
-        
+    public func toString(format format: Bool = true)->String{
         
         let typeName = "\(self.dynamicType)"
         let isVector = self is Vector
         
         if format && !isVector {
             do{
-                let entriesStrings:String = try entries().enumerated().reduce("\n"){ (str, item:(offset: Int, element: Double)) -> String in
+                let entriesStrings:String = try entries().enumerate().reduce("\n"){ (str, item:(offset: Int, element: Double)) -> String in
                     
                     let result = str + " " + String(format: "%.3lf", item.element)
                     
@@ -358,7 +357,7 @@ extension Basic where Count == la_count_t, RawValue == la_object_t  {
             
         }else{
             
-            let entriesStrings:String = (try? self.entries().map{ String(format: "%.3lf", $0) }.joined(separator: " ")) ?? "failed"
+            let entriesStrings:String = (try? self.entries().map{ String(format: "%.3lf", $0) }.joinWithSeparator(" ")) ?? "failed"
             return typeName + "(\(self.rowsCount)X\(self.colsCount)) => [\(entriesStrings)]"
             
         }
@@ -372,8 +371,8 @@ extension Basic where Count == la_count_t, RawValue == la_object_t  {
         return toString()
     }
     
-    public var customPlaygroundQuickLook: PlaygroundQuickLook{
-        return PlaygroundQuickLook.text(toString(format: false))
+    public func customPlaygroundQuickLook()->PlaygroundQuickLook{
+        return PlaygroundQuickLook.Text(toString(format: false))
     }
     
 }

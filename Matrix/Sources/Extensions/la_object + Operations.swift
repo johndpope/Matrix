@@ -19,13 +19,13 @@ extension la_object_t {
 extension la_object_t  {
 
     internal func makeRepeatedObject(repeating: Double)->la_object_t{
-        let doubles = [Double](repeating: repeating, count: Int(colsCount * rowsCount))
+        let doubles = [Double](count: Int(colsCount * rowsCount), repeatedValue: repeating)
         
         return  la_matrix_from_double_buffer(doubles, rowsCount, colsCount, colsCount, la_hint_t(LA_NO_HINT), la_attribute_t(LA_DEFAULT_ATTRIBUTES))
     }
     
     internal func makeRepeatedObject(repeating: Float)->la_object_t{
-        let floats = [Float](repeating: repeating, count: Int(colsCount * rowsCount))
+        let floats = [Float](count: Int(colsCount * rowsCount), repeatedValue: repeating)
         
         return  la_matrix_from_float_buffer(floats, rowsCount, colsCount, colsCount, la_hint_t(LA_NO_HINT), la_attribute_t(LA_DEFAULT_ATTRIBUTES))
     }
@@ -45,25 +45,25 @@ extension la_object_t  {
     }
     
     //+
-    internal func summed(_ right : la_object_t) -> la_object_t{
+    internal func summed(right : la_object_t) -> la_object_t{
         let result = la_sum(self, right)
         return result
     }
     
     //+
-    internal func summed(_ right : Double) -> la_object_t{
-        let result = la_sum(self, makeRepeatedObject(repeating: right))
+    internal func summed(right : Double) -> la_object_t{
+        let result = la_sum(self, makeRepeatedObject(right))
         return result
     }
     
     //+
-    internal func summed(_ right : Float) -> la_object_t{
-        let result = la_sum(self, makeRepeatedObject(repeating: right))
+    internal func summed(right : Float) -> la_object_t{
+        let result = la_sum(self, makeRepeatedObject(right))
         return result
     }
     
     //-
-    internal func differenced(_ right : la_object_t) -> la_object_t{
+    internal func differenced(right : la_object_t) -> la_object_t{
         
         let result = la_difference(self, right)
         return result
@@ -71,51 +71,51 @@ extension la_object_t  {
     }
     
     //-
-    internal func differenced(_ right : Double) -> la_object_t{
-        let result = la_difference(self, makeRepeatedObject(repeating: right))
+    internal func differenced(right : Double) -> la_object_t{
+        let result = la_difference(self, makeRepeatedObject(right))
         return result
     }
     
     //-
-    internal func differenced(_ right : Float) -> la_object_t{
-        let result = la_difference(self, makeRepeatedObject(repeating: right))
+    internal func differenced(right : Float) -> la_object_t{
+        let result = la_difference(self, makeRepeatedObject(right))
         return result
     }
     
     //*
-    internal func producted(_ scalar : Double) -> la_object_t{
+    internal func producted(scalar : Double) -> la_object_t{
         let result = la_scale_with_double(self, scalar)
         return  result
     }
     
     //*
-    internal func producted(_ scalar : Float) -> la_object_t{
+    internal func producted(scalar : Float) -> la_object_t{
         let result = la_scale_with_float(self, scalar)
         return  result
     }
 
     //*
-    internal func producted(_ right : la_object_t) -> la_object_t{
+    internal func producted(right : la_object_t) -> la_object_t{
         let result = la_matrix_product(self, right)
         return  result
     }
     
-    internal func elementwised(_ right : la_object_t) -> la_object_t{
+    internal func elementwised(right : la_object_t) -> la_object_t{
 
         let result = la_elementwise_product(self, right)
         return  result
     }
     
-    internal func scaled(_ scalar : Double) -> la_object_t{
+    internal func scaled(scalar : Double) -> la_object_t{
         return  la_scale_with_double(self, scalar)
     }
     
-    internal func scaled(_ scalar : Float) -> la_object_t{
+    internal func scaled(scalar : Float) -> la_object_t{
         return  la_scale_with_float(self, scalar)
     }
     
     //解聯立
-    internal func solved(_ right : la_object_t) -> la_object_t{
+    internal func solved(right : la_object_t) -> la_object_t{
         let result = la_solve(self, right)
         return result
         
@@ -138,7 +138,7 @@ extension la_object_t  {
     }
     
     //外積
-    internal func outerProducted(_ right : la_object_t) -> la_object_t{
+    internal func outerProducted(right : la_object_t) -> la_object_t{
         
         let result = la_outer_product(self, right)
         return result
@@ -146,7 +146,7 @@ extension la_object_t  {
     }
     
     //內積
-    internal func innerProducted(_ right : la_object_t) -> la_object_t{
+    internal func innerProducted(right : la_object_t) -> la_object_t{
         let result = la_inner_product(self, right)
         return result
     }

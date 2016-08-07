@@ -15,10 +15,10 @@ public struct Status: RawRepresentable, CustomStringConvertible, CustomDebugStri
     internal var value:RawValue
     
     
-    internal static func check(status: Status) throws{
+    internal static func check(status status: Status) throws{
         
         guard status >= 0 else {
-            throw LAError.errorWithStatus(status: status)
+            throw LAError.ErrorWithStatus(status: status)
         }
         
         if status > 0 {
@@ -35,35 +35,35 @@ public struct Status: RawRepresentable, CustomStringConvertible, CustomDebugStri
     public var rawValue: RawValue { return value }
     
     
-    public static let success = Status(rawValue: la_status_t(LA_SUCCESS))
-    public static let warningPoorlyConditioned = Status(rawValue: la_status_t(LA_WARNING_POORLY_CONDITIONED))
-    public static let `internal` = Status(rawValue: la_status_t(LA_INTERNAL_ERROR))
-    public static let invalidParameterError = Status(rawValue: la_status_t(LA_INVALID_PARAMETER_ERROR))
-    public static let dimensionMismatchError = Status(rawValue: la_status_t(LA_DIMENSION_MISMATCH_ERROR))
-    public static let precisionMismatchError = Status(rawValue: la_status_t(LA_PRECISION_MISMATCH_ERROR))
-    public static let singularError = Status(rawValue: la_status_t(LA_SINGULAR_ERROR))
-    public static let sliceOutOfBoundsError = Status(rawValue: la_status_t(LA_SLICE_OUT_OF_BOUNDS_ERROR))
+    public static let Success = Status(rawValue: la_status_t(LA_SUCCESS))
+    public static let WarningPoorlyConditioned = Status(rawValue: la_status_t(LA_WARNING_POORLY_CONDITIONED))
+    public static let Internal = Status(rawValue: la_status_t(LA_INTERNAL_ERROR))
+    public static let InvalidParameterError = Status(rawValue: la_status_t(LA_INVALID_PARAMETER_ERROR))
+    public static let DimensionMismatchError = Status(rawValue: la_status_t(LA_DIMENSION_MISMATCH_ERROR))
+    public static let PrecisionMismatchError = Status(rawValue: la_status_t(LA_PRECISION_MISMATCH_ERROR))
+    public static let SingularError = Status(rawValue: la_status_t(LA_SINGULAR_ERROR))
+    public static let SliceOutOfBoundsError = Status(rawValue: la_status_t(LA_SLICE_OUT_OF_BOUNDS_ERROR))
     
     public var description : String {
         
         let represent:String
         
         switch self {
-        case Status.success :
+        case Status.Success :
             represent = "Success"
-        case Status.warningPoorlyConditioned:
+        case Status.WarningPoorlyConditioned:
             represent = "WarningPoorlyConditioned"
-        case Status.internal:
+        case Status.Internal:
             represent = "Internal"
-        case Status.invalidParameterError:
+        case Status.InvalidParameterError:
             represent = "InvalidParameterError"
-        case Status.dimensionMismatchError:
+        case Status.DimensionMismatchError:
             represent = "DimensionMismatchError"
-        case Status.precisionMismatchError:
+        case Status.PrecisionMismatchError:
             represent = "PrecisionMismatchError"
-        case Status.singularError:
+        case Status.SingularError:
             represent = "SingularError"
-        case Status.sliceOutOfBoundsError:
+        case Status.SliceOutOfBoundsError:
             represent = "SliceOutOfBoundsError"
         default:
             represent = "Undefined"

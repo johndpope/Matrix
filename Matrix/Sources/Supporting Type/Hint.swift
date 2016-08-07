@@ -9,7 +9,7 @@
 import Accelerate
 
 //MARK: Hint Type Redefined
-public struct Hint:OptionSet {
+public struct Hint:OptionSetType {
     
     public typealias RawValue = la_hint_t
     internal var value:RawValue
@@ -22,12 +22,12 @@ public struct Hint:OptionSet {
     
     public var rawValue: RawValue { return value }
     
-    public static let `default` = Hint.noHint
-    public static let noHint = Hint(rawValue: la_hint_t(LA_NO_HINT))
-    public static let shapeDiagonal = Hint(rawValue: la_hint_t(LA_SHAPE_DIAGONAL))
-    public static let lowerTriangular = Hint(rawValue: la_hint_t(LA_SHAPE_LOWER_TRIANGULAR))
-    public static var upperTriangular = Hint(rawValue: la_hint_t(LA_SHAPE_UPPER_TRIANGULAR))
-    public static var featureSymmetric = Hint(rawValue: la_hint_t(LA_FEATURE_SYMMETRIC))
-    public static var featurePositiveDefinite = Hint(rawValue: la_hint_t(LA_FEATURE_POSITIVE_DEFINITE))
-    public static var featureDiagonallyDominant = Hint(rawValue: la_hint_t(LA_FEATURE_DIAGONALLY_DOMINANT))
+    public static let Default = Hint.NoHint
+    public static let NoHint = Hint(rawValue: la_hint_t(LA_NO_HINT))
+    public static let ShapeDiagonal = Hint(rawValue: la_hint_t(LA_SHAPE_DIAGONAL))
+    public static let LowerTriangular = Hint(rawValue: la_hint_t(LA_SHAPE_LOWER_TRIANGULAR))
+    public static var UpperTriangular = Hint(rawValue: la_hint_t(LA_SHAPE_UPPER_TRIANGULAR))
+    public static var FeatureSymmetric = Hint(rawValue: la_hint_t(LA_FEATURE_SYMMETRIC))
+    public static var FeaturePositiveDefinite = Hint(rawValue: la_hint_t(LA_FEATURE_POSITIVE_DEFINITE))
+    public static var FeatureDiagonallyDominant = Hint(rawValue: la_hint_t(LA_FEATURE_DIAGONALLY_DOMINANT))
 }

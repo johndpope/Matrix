@@ -11,25 +11,25 @@ import Accelerate
 //MARK: - Error Defines
 
 //MARK: Error Types In Matrix
-public enum LAError:Error, Equatable {
-    case undefined
-    case sizeNotEqual(function:String, position:MatrixPosition<Matrix>, otherPosition: MatrixPosition<Matrix>)
-    case blas(function: String, status: Status)
-    case errorWithStatus(status: Status)
-    case constructWithSize
+public enum LAError:ErrorType, Equatable {
+    case Undefined
+    case SizeNotEqual(function:String, position:MatrixPosition<Matrix>, otherPosition: MatrixPosition<Matrix>)
+    case Blas(function: String, status: Status)
+    case ErrorWithStatus(status: Status)
+    case ConstructWithSize
     
     var identifier:String{
         let id:String
         switch self{
-        case .errorWithStatus:
+        case .ErrorWithStatus:
             id = "ErrorWithStatus"
-        case .undefined:
+        case .Undefined:
             id = "Undefined"
-        case .sizeNotEqual:
+        case .SizeNotEqual:
             id = "SizeNotEqual"
-        case .blas:
+        case .Blas:
             id = "BLAS"
-        case .constructWithSize:
+        case .ConstructWithSize:
             id = "ConstructWithSize"
         }
         return id
@@ -52,7 +52,7 @@ public enum MatrixPosition<T: Basic> {
 
 //MARK: Define which size failed
 
-public struct MatrixSize:OptionSet {
+public struct MatrixSize:OptionSetType {
     
     public typealias RawValue = Int
     internal var value:RawValue

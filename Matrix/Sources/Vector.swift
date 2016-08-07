@@ -13,9 +13,9 @@ public protocol VectorBasic : Basic { /* nothing defined. */ }
 extension VectorBasic where Count == la_count_t, RawValue == la_object_t, Element == Double {
     public init(arrayLiteral elements: Element...){
         
-        let hint: Hint = .default
-        let attributes: Attribute = .default
-        
+        let hint: Hint = .Default
+        let attributes: Attribute = .Default
+    
         let rows = Count(elements.count)
         let object = la_matrix_from_double_buffer(elements, rows, 1, 1, hint.rawValue, attributes.rawValue)
         
@@ -26,7 +26,7 @@ extension VectorBasic where Count == la_count_t, RawValue == la_object_t, Elemen
 extension VectorBasic where Count == la_count_t, RawValue == la_object_t {
     
     public init(entries: [Double], hint: Hint =
-        .default, attributes: Attribute = .default){
+        .Default, attributes: Attribute = .Default){
             
             let rows = Count(entries.count)
             
@@ -36,10 +36,10 @@ extension VectorBasic where Count == la_count_t, RawValue == la_object_t {
     }
     
     
-    public init(doubleValue value: Double, rows:Count, attributes: Attribute = .default) {
+    public init(doubleValue value: Double, rows:Count, attributes: Attribute = .Default) {
         let splat = la_splat_from_double(value, attributes.rawValue)
         let object = la_vector_from_splat(splat, rows)
-        self = Self(object: object, hint: .default, attributes: attributes)
+        self = Self(object: object, hint: .Default, attributes: attributes)
     }
     
     public func outerProducted(rightObject vector: Vector) throws -> Self{
@@ -47,28 +47,28 @@ extension VectorBasic where Count == la_count_t, RawValue == la_object_t {
         return Self(object: result, hint: hint, attributes: self.attributes)
     }
     
-    internal func _outerProducted(_ rawValue : RawValue) throws -> RawValue{
+    internal func _outerProducted(rawValue : RawValue) throws -> RawValue{
         
         let result = rawValue.outerProducted(rawValue)
         
         do{
             try Status.check(status: result.status)
         }catch{
-            throw LAError.blas(function: "la_outer_product", status: result.status)
+            throw LAError.Blas(function: "la_outer_product", status: result.status)
         }
         
         return result
     }
     
     
-    internal func _innerProducted(_ rawValue : RawValue) throws -> RawValue{
+    internal func _innerProducted(rawValue : RawValue) throws -> RawValue{
         
         let result = rawValue.innerProducted(rawValue)
         
         do{
             try Status.check(status: result.status)
         }catch{
-            throw LAError.blas(function: "la_inner_product", status: result.status)
+            throw LAError.Blas(function: "la_inner_product", status: result.status)
         }
     
         return result
@@ -104,7 +104,7 @@ public struct Vector : _Basic, VectorBasic {
         self = Vector(object: rawValue)
     }
     
-    public init(object: la_object_t, hint: Hint = .default, attributes: Attribute = .default){
+    public init(object: la_object_t, hint: Hint = .Default, attributes: Attribute = .Default){
         self.rawValue = object
         self.hint = hint
         self.attributes = attributes
@@ -156,17 +156,17 @@ public func <**(lhs: Vector, rhs:Vector) throws -> Vector {
 
 extension Vector {
     
-    public func mapped(_ closure:(Double)->Double) throws ->Vector{
+    public func mapped(closure:(Double)->Double) throws ->Vector{
         let mapped:[Double] = try entries().map { closure($0) }
         return Vector(entries: mapped)
     }
     
-    public mutating func map(_ closure:(Double)->Double) throws {
+    public mutating func map(closure:(Double)->Double) throws {
         let vector  = try self.mapped(closure)
         rawValue = vector.rawValue
     }
     
-    subscript(_ functor: (Double)->Double) -> Vector? {
+    subscript(functor: (Double)->Double) -> Vector? {
         return try? mapped(functor)
     }
     

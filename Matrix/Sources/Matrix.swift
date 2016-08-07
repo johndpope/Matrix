@@ -18,10 +18,10 @@ extension MatrixBasic where Count == la_count_t, RawValue == la_object_t, Elemen
 
 extension MatrixBasic where Count == la_count_t, RawValue == la_object_t {
     
-    public init( entries: [Double], rows: Count, cols: Count, stride: Count? = nil, hint: Hint = .default, attributes:Attribute = .default) throws {
+    public init( entries: [Double], rows: Count, cols: Count, stride: Count? = nil, hint: Hint = .Default, attributes:Attribute = .Default) throws {
         
         if Int(rows) * Int(cols) != entries.count {
-            throw LAError.constructWithSize
+            throw LAError.ConstructWithSize
         }
         
         let object = la_matrix_from_double_buffer(entries, Count(rows), cols, stride ?? cols, hint.rawValue, attributes.rawValue)
@@ -29,17 +29,17 @@ extension MatrixBasic where Count == la_count_t, RawValue == la_object_t {
         self = Self(object: object, hint: hint, attributes: attributes)
     }
     
-    public init( entries: [[Double]], hint: Hint = Hint.default, attribute: Attribute = .default) throws {
+    public init( entries: [[Double]], hint: Hint = .Default, attribute: Attribute = .Default) throws {
         
         let flatEntries = entries.flatMap { $0 }
         
         guard let cols = entries.first?.count else {
-            throw LAError.errorWithStatus(status: .precisionMismatchError)
+            throw LAError.ErrorWithStatus(status: .PrecisionMismatchError)
         }
         
         for entryArray in entries {
             guard cols == entryArray.count else {
-                throw LAError.errorWithStatus(status: .precisionMismatchError)
+                throw LAError.ErrorWithStatus(status: .PrecisionMismatchError)
             }
         }
         
@@ -49,16 +49,16 @@ extension MatrixBasic where Count == la_count_t, RawValue == la_object_t {
     }
     
     public init(identifyWithSize size:Count, scalarType: ScalarType =
-        .Default, attributes: Attribute = .default){
+        .Default, attributes: Attribute = .Default){
             
             let object = la_identity_matrix(size, scalarType.rawValue, attributes.rawValue)
-            self = Self(object: object, hint: .default, attributes: attributes)
+            self = Self(object: object, hint: .Default, attributes: attributes)
     }
     
-    public init(repeat value: Double, rows:Count, cols:Count, attributes: Attribute = .default) {
+    public init(repeat value: Double, rows:Count, cols:Count, attributes: Attribute = .Default) {
         let splat = la_splat_from_double(value, attributes.rawValue)
         let object = la_matrix_from_splat(splat, rows, cols)
-        self = Self(object: object, hint: .default, attributes: attributes)
+        self = Self(object: object, hint: .Default, attributes: attributes)
     }
     
 }
@@ -87,7 +87,7 @@ public struct Matrix : _Basic, MatrixBasic {
         self = Matrix(object: rawValue)
     }
     
-    public init(object rawValue: la_object_t, hint: Hint = .default, attributes: Attribute = .default){
+    public init(object rawValue: la_object_t, hint: Hint = .Default, attributes: Attribute = .Default){
         self.rawValue = rawValue
         self.hint = hint
         self.attributes = attributes
@@ -140,17 +140,17 @@ public func *(lhs: Matrix, rhs: [[Double]]) throws ->Matrix{
 
 extension Matrix {
     
-    public func mapped(_ closure:(Double)->Double) throws ->Matrix{
+    public func mapped(closure:(Double)->Double) throws ->Matrix{
         let mapped:[Double] = try entries().map { closure($0) }
         return try Matrix(entries: mapped, rows: rowsCount, cols: colsCount)
     }
     
-    public mutating func map(_ closure:(Double)->Double) throws {
+    public mutating func map(closure:(Double)->Double) throws {
         let matrix  = try self.mapped(closure)
         rawValue = matrix.rawValue
     }
     
-    subscript(_ factor: (Double)->Double) -> Matrix? {
+    subscript(factor: (Double)->Double) -> Matrix? {
         return try? mapped(factor)
     }
     
