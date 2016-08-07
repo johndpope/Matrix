@@ -18,7 +18,7 @@
 },
 "platforms": {
 "ios": "8.0",
-"osx": "10.7"
+"osx": "10.9"
 },
 "requires_arc": true,
 "source_files": "Matrix/Sources/**/*.swift",
